@@ -11,8 +11,9 @@ export class userRegistration {
   async generateUserDetails() {
     const Name = await this.generic.randomNameGenerator();
     const Email = await this.generic.randomEmailGenerator();
+    const Password = await this.generic.randomPasswordGenerator();
 
-    return { Name, Email };
+    return { Name, Email, Password };
   }
 
   async verifyUserRegistration() {
@@ -20,7 +21,7 @@ export class userRegistration {
     await this.generic.clickOnElement("a[href='/login']");
     await this.generic.verifyElementText(".signup-form h2", "New User Signup!");
     this.userDetails = await this.generateUserDetails();
-    const { Name, Email } = this.userDetails;
+    const { Name, Email, Password } = this.userDetails;
 
     const NameElement = await this.page.getByPlaceholder("Name");
     await NameElement.type(Name);
@@ -75,7 +76,43 @@ export class userRegistration {
     const nameElement = this.page.locator("#name");
     const emailElement = this.page.locator("#email");
 
+    await expect(emailElement).toHaveAttribute("disabled", "disabled");
     expect(await nameElement.inputValue()).toBe(Name);
     expect(await emailElement.inputValue()).toBe(Email);
+  }
+
+  async enterAndVerifyPassword() {
+    const { Password } = this.userDetails;
+    const passwordElement = this.page.locator("#password");
+    await passwordElement.type(Password);
+    expect(await passwordElement.inputValue()).toBe(Password);
+  }
+
+  async enterBirthInformation(Day, Month, Year) {
+    await this.page.selectOption("select#days", Day);
+    await this.page.selectOption("select#months", Month);
+    await this.page.selectOption("select#years", Year);
+  }
+
+  async selectNewsletterSubscription(confirmation) {
+    const newsletterCheckbox = this.page.locator("#newsletter");
+
+    if (confirmation === true) {
+      await newsletterCheckbox.check();
+      await newsletterCheckbox.isChecked();
+    } else {
+      await expect(newsletterCheckbox).not.toBeChecked();
+    }
+  }
+
+  async selectOffers(confirmation) {
+    const OffersCheckbox = this.page.locator("#optin");
+
+    if (confirmation === true) {
+      await OffersCheckbox.check();
+      await OffersCheckbox.isChecked();
+    } else {
+      await expect(OffersCheckbox).not.toBeChecked();
+    }
   }
 }

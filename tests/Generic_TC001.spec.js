@@ -17,11 +17,19 @@ suite("Automation Testing", () => {
     await home.verifySliderContainer();
   });
 
-  test.only('Verify User Registration', async ({ page }) => {
-
+  test.only("Verify User Registration", async ({ page }) => {
     const user = new userRegistration(page);
+    const day = "1";
+    const month = "January";
+    const year = "2003";
+    const sex = "Female";
+
     await user.verifyUserRegistration();
-    await user.selectSex("Female");
+    await user.selectSex(sex);
     await user.verifyNameandEmail();
+    await user.enterAndVerifyPassword();
+    await user.enterBirthInformation(day, month, year);
+    await user.selectNewsletterSubscription(false);
+    await user.selectOffers(true);
   });
 });

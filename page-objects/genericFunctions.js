@@ -26,4 +26,8 @@ export class genericFunctions {
   async randomEmailGenerator() {
     return faker.internet.email();
   }
+
+  async randomPasswordGenerator() {
+    return faker.internet.password();
+  }
 }
