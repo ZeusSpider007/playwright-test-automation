@@ -5,21 +5,22 @@ export class userRegistration {
   constructor(page) {
     this.page = page;
     this.generic = new genericFunctions(this.page);
+    this.userDetails = null;
   }
 
   async generateUserDetails() {
     const Name = await this.generic.randomNameGenerator();
     const Email = await this.generic.randomEmailGenerator();
-    
+
     return { Name, Email };
-}
+  }
 
   async verifyUserRegistration() {
     console.log("Verifying User Registration Page");
     await this.generic.clickOnElement("a[href='/login']");
     await this.generic.verifyElementText(".signup-form h2", "New User Signup!");
-
-    const { Name, Email } = await this.generateUserDetails(); 
+    this.userDetails = await this.generateUserDetails();
+    const { Name, Email } = this.userDetails;
 
     const NameElement = await this.page.getByPlaceholder("Name");
     await NameElement.type(Name);
@@ -50,7 +51,6 @@ export class userRegistration {
     //verify the Enter Account Information heading
     const AccountInformationtxt = this.page.locator(".login-form h2").first();
     await expect(AccountInformationtxt).toHaveText("Enter Account Information");
-
   }
 
   async selectSex(option) {
@@ -69,16 +69,13 @@ export class userRegistration {
   }
 
   //This function verifies the Name and Email values which was entered before are correctly showing in the textboxes
-  async verifyNameandEmail(){
+  async verifyNameandEmail() {
+    const { Name, Email } = this.userDetails;
 
-    const { Name, Email } = await this.generateUserDetails(); 
-
-    const nameElement = this.page.locator('#name')
-    const emailElement = this.page.locator('#email')
+    const nameElement = this.page.locator("#name");
+    const emailElement = this.page.locator("#email");
 
     expect(await nameElement.inputValue()).toBe(Name);
     expect(await emailElement.inputValue()).toBe(Email);
-
   }
-
 }

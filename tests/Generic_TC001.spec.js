@@ -22,5 +22,6 @@ suite("Automation Testing", () => {
     const user = new userRegistration(page);
     await user.verifyUserRegistration();
     await user.selectSex("Female");
+    await user.verifyNameandEmail();
   });
 });
