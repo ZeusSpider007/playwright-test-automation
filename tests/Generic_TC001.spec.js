@@ -31,5 +31,15 @@ suite("Automation Testing", () => {
     await user.enterBirthInformation(day, month, year);
     await user.selectNewsletterSubscription(false);
     await user.selectOffers(true);
+    await user.enterFirstNameandLastName();
+    await user.enterCompanyName();
+    await user.enterAddress();
+    await user.enterState();
+    await user.enterCity();
+    await user.enterZipCode();
+    await user.enterPhoneNumber();
+    await user.clickCreateAccountButton();
+
+
   });
 });

@@ -30,4 +30,28 @@ export class genericFunctions {
   async randomPasswordGenerator() {
     return faker.internet.password();
   }
+
+  async randomCompanyNameGenerator() {
+    return faker.company.name();
+  }
+
+  async randomAddressGenerator() {
+    return faker.location.streetAddress();
+  }
+
+  async randomStateGenerator() {
+    return faker.location.state();
+  }
+
+  async randomCityGenerator() {
+    return faker.location.city();
+  }
+
+  async randomZipCodeGenerator() {
+    return faker.location.zipCode();
+  }
+
+  async randomPhoneNumberGenerator() {
+    return faker.phone.number();
+  }
 }
