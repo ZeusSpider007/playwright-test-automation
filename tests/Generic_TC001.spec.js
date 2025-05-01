@@ -17,7 +17,7 @@ suite("Automation Testing", () => {
     await home.verifySliderContainer();
   });
 
-  test.only("Verify User Registration", async ({ page }) => {
+  test("Verify User Registration", async ({ page }) => {
     const user = new userRegistration(page);
     const day = "1";
     const month = "January";
